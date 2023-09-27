@@ -1,0 +1,16 @@
+body{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: bisque    ;
+}
+
+
+table, th, td{
+    border: 1px solid black;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#title{
+    font-size: 50px;
+    font-weight: 600;
+}
