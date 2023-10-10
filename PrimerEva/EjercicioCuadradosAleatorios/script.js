@@ -1,5 +1,6 @@
 let body = document.body;
 let htmlCuadrados = ""; 
+
 for (let index = 0; index < 2000; index++) {
     htmlCuadrados += generarNuevoCuadrado();
     console.log(index);
