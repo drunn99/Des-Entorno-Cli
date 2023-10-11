@@ -1,4 +1,3 @@
-
 switch (prompt("Escoge tu opción: d(decodificar)|c(codificar)")) {
     case 'c':
         let string = prompt("Introduce tu codigo y la clave separada por una contrabarra '/'");
@@ -29,4 +28,8 @@ function codificar(string, cambio) {
         }
     }
     return nuevoString;
+}
+
+function decodificar(string, cambio){
+    
 }
