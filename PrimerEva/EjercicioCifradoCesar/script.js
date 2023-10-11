@@ -32,3 +32,7 @@ function codificar(string, cambio) {
     }
     return nuevoString;
 }
+
+function decodificar(string, cambio){
+    
+}
