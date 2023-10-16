@@ -1,16 +1,19 @@
+let output = document.getElementById("text");
+
 switch (prompt("Escoge tu opción: d(decodificar)|c(codificar)")) {
     case 'c':
         let string = prompt("Introduce tu codigo y la clave separada por una contrabarra '/'");
         string.trim();
         let stringArray = string.split('/');
         let respuesta = codificar(stringArray[0],stringArray[1]);
-        document.write(respuesta);
+        output.innerHTML = respuesta;
         break;
     case 'd':
     default:
 }
 
 function codificar(string, cambio) {
+    console.log(string.charCodeAt(0) + "|" + cambio);
     let nuevoString = "";
     for (let i = 0; i < string.length; i++) {
         if (string.charCodeAt(i) > 64 && string.charCodeAt(i) < 91) {
