@@ -21,6 +21,10 @@ function es_palindromo(frase){
 }
 
 function limpiarCadena (frase){
+    /*
+    const removeAccents = str =>
+    str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    */
     frase = frase.trim();
     frase = frase.split(" ");
     let frase_limpia = "";
@@ -28,5 +32,6 @@ function limpiarCadena (frase){
         frase_limpia += iterator;
     }
     frase_limpia = frase_limpia.toLowerCase();
+    // removeAccents(frase);
     return frase_limpia;
 }
