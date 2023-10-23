@@ -23,7 +23,7 @@ function crearPosiciones(grid) {
     let contadorDestructores = 3;
     let contadorFragatas = 2;
     let tipoDeNave, semilla, casillaFinal;
-    let testContador = 0;
+    let forzarDetencion = 0;
     //Generamos naves mientras aún queden por generar
     while (contadorPortaviones + contadorAcorazados + contadorDestructores + contadorFragatas > 0) {
         //Generamos casillas nuevas mientras estas no sean aptas
@@ -80,11 +80,10 @@ function crearPosiciones(grid) {
                 console.error("Error");
                 break;
         }
-        if(testContador == 20){
+        forzarDetencion++;
+        if(forzarDetencion == 5000){
             break;
         }
-        testContador++;
-        
     }
     return grid;
 }
@@ -300,7 +299,6 @@ function comprobarCasillas(casilla1, casilla2, grid) {
     }
     return true;
 }
-
 
 
 function generarHtml (grid){
