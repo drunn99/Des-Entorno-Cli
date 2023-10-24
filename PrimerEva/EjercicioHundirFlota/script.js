@@ -23,21 +23,27 @@ function crearPosiciones(grid) {
     let contadorDestructores = 3;
     let contadorFragatas = 2;
     let tipoDeNave, semilla, casillaFinal;
-    let forzarDetencion = 0;
     //Generamos naves mientras aún queden por generar
     while (contadorPortaviones + contadorAcorazados + contadorDestructores + contadorFragatas > 0) {
         //Generamos casillas nuevas mientras estas no sean aptas
         let casillaApta = false;
+        tipoDeNave = generaNaveAleatorias(contadorPortaviones,contadorAcorazados,contadorDestructores,contadorFragatas);
+        let forzarDetención = 100;
         while (!casillaApta) {
             let direccionDibujo = Math.floor(Math.random() * 2);
             semilla = [Math.floor(Math.random() * 10), Math.floor(Math.random() * 10)];
-            tipoDeNave = Math.floor(Math.random() * 4);
+            console.log(tipoDeNave);
             let arrayValidez = comprobarPosicion(semilla, direccionDibujo, tipoDeNave, grid);
             casillaApta = arrayValidez[0];
+            console.log(semilla + " seed");
             if (casillaApta) {
                 casillaFinal = arrayValidez[2];
-                console.log(semilla);
+                console.log(" seed APTA");
             }
+            if(forzarDetención < 1){
+                break;
+            }
+            forzarDetención--;
         }
         switch (tipoDeNave) {
             case 0:
@@ -79,10 +85,6 @@ function crearPosiciones(grid) {
             default:
                 console.error("Error");
                 break;
-        }
-        forzarDetencion++;
-        if(forzarDetencion == 5000){
-            break;
         }
     }
     return grid;
@@ -276,7 +278,7 @@ function comprobarPosicion(semilla, direccionDibujo, tipoDeNave, grid) {
             break;
         default:
             console.log("Caso defectuoso " + semilla);
-            return null;
+            return [false];
             break;
     }
 }
@@ -300,7 +302,7 @@ function comprobarCasillas(casilla1, casilla2, grid) {
     return true;
 }
 
-
+//Genera el html a mostrar
 function generarHtml (grid){
     let cadenaDivs = "";
     for (let i = 0; i < grid.length; i++) {
@@ -313,4 +315,35 @@ function generarHtml (grid){
         }
     }
     return cadenaDivs;
+}
+
+//Genera naves aleatoris (siempre que su contador sea > 0)
+function generaNaveAleatorias(contadorPortaviones,contadorAcorazados,contadorDestructores,contadorFragatas){
+    let arrayContadores = new Map();
+    arrayContadores.set(0,contadorPortaviones);
+    arrayContadores.set(1,contadorAcorazados);
+    arrayContadores.set(2,contadorDestructores);
+    arrayContadores.set(3,contadorFragatas);
+    let arrayContadoresMayorCero = [];
+    for (let i = 0; i < arrayContadores.size; i++) {
+        if(arrayContadores.get(i) > 0){
+            arrayContadoresMayorCero.push(i);
+        }
+    }
+    arrayContadoresMayorCero = shuffle(arrayContadoresMayorCero);
+    console.log(arrayContadoresMayorCero);
+    return arrayContadoresMayorCero[0];
+}
+
+function shuffle (array){
+    let indice = array.length, indiceAleatorio;
+    let aux;
+    while(indice > 0){
+        indiceAleatorio = Math.floor(Math.random() * indice);
+        indice--;
+        aux = array[indice];
+        array[indice] = array[indiceAleatorio];
+        array[indiceAleatorio] = aux;
+    }
+    return array;
 }
