@@ -22,13 +22,11 @@ function crearPosiciones(grid) {
     let contadorAcorazados = 3;
     let contadorDestructores = 3;
     let contadorFragatas = 2;
-    let tipoDeNave, semilla, casillaFinal;
+    let tipoDeNave, semilla, casillaFinal, casillaApta = false;
     //Generamos naves mientras aún queden por generar
     while (contadorPortaviones + contadorAcorazados + contadorDestructores + contadorFragatas > 0) {
         //Generamos casillas nuevas mientras estas no sean aptas
-        let casillaApta = false;
-        tipoDeNave = generaNaveAleatorias(contadorPortaviones,contadorAcorazados,contadorDestructores,contadorFragatas);
-        let forzarDetención = 100;
+        tipoDeNave = generaNaveAleatorias(contadorPortaviones, contadorAcorazados, contadorDestructores, contadorFragatas);
         while (!casillaApta) {
             let direccionDibujo = Math.floor(Math.random() * 2);
             semilla = [Math.floor(Math.random() * 10), Math.floor(Math.random() * 10)];
@@ -40,59 +38,37 @@ function crearPosiciones(grid) {
                 casillaFinal = arrayValidez[2];
                 console.log(" seed APTA");
             }
-            if(forzarDetención < 1){
-                break;
-            }
-            forzarDetención--;
+            debugger;
         }
         switch (tipoDeNave) {
             case 0:
-                if (contadorPortaviones > 0) {
-                    ponleCeros(semilla, casillaFinal, grid);
-                    contadorPortaviones--;
-                } else {
-                    console.error("Ya no pueden haber más portaviones");
-                    break;
-                }
+                ponleCeros(semilla, casillaFinal, grid);
+                contadorPortaviones--;
                 break;
             case 1:
-                if (contadorAcorazados > 0) {
-                    ponleCeros(semilla, casillaFinal, grid);
-                    contadorAcorazados--;
-                } else {
-                    console.error("Ya no pueden haber más acorazados");
-                    break;
-                }
+                ponleCeros(semilla, casillaFinal, grid);
+                contadorAcorazados--;
+
                 break;
             case 2:
-                if (contadorDestructores > 0) {
-                    ponleCeros(semilla, casillaFinal, grid);
-                    contadorDestructores--;
-                } else {
-                    console.error("Ya no pueden haber más destructores");
-                    break;
-                }
+                ponleCeros(semilla, casillaFinal, grid);
+                contadorDestructores--;
                 break;
             case 3:
-                if (contadorFragatas > 0) {
-                    ponleCeros(semilla, semilla, grid);
-                    contadorFragatas--;
-                } else {
-                    console.error("Ya no pueden haber más fragatas");
-                    break;
-                }
+                ponleCeros(semilla, semilla, grid);
+                contadorFragatas--;
                 break;
             default:
                 console.error("Error");
                 break;
         }
+        casillaApta = false;
     }
     return grid;
 }
 
 //Rellena el array bidmensional con 1 en función de las casillas semilla y final.
 function ponleCeros(semilla, casillaFinal, grid) {
-    let casillasPorDibujar = [semilla, casillaFinal];
     if (semilla == casillaFinal) {
         //Se dibuja una fragata
         grid[semilla[0]][semilla[1]] = 1;
@@ -300,14 +276,14 @@ function comprobarCasillas(casilla1, casilla2, grid) {
         }
     }
     return true;
-}
+}  
 
 //Genera el html a mostrar
-function generarHtml (grid){
+function generarHtml(grid) {
     let cadenaDivs = "";
     for (let i = 0; i < grid.length; i++) {
         for (let j = 0; j < grid[i].length; j++) {
-            if(grid[i][j] == 0){
+            if (grid[i][j] == 0) {
                 cadenaDivs += "<div class='celda'></div>";
             } else {
                 cadenaDivs += "<div class='celda ocupada'></div>";
@@ -318,15 +294,15 @@ function generarHtml (grid){
 }
 
 //Genera naves aleatoris (siempre que su contador sea > 0)
-function generaNaveAleatorias(contadorPortaviones,contadorAcorazados,contadorDestructores,contadorFragatas){
+function generaNaveAleatorias(contadorPortaviones, contadorAcorazados, contadorDestructores, contadorFragatas) {
     let arrayContadores = new Map();
-    arrayContadores.set(0,contadorPortaviones);
-    arrayContadores.set(1,contadorAcorazados);
-    arrayContadores.set(2,contadorDestructores);
-    arrayContadores.set(3,contadorFragatas);
+    arrayContadores.set(0, contadorPortaviones);
+    arrayContadores.set(1, contadorAcorazados);
+    arrayContadores.set(2, contadorDestructores);
+    arrayContadores.set(3, contadorFragatas);
     let arrayContadoresMayorCero = [];
     for (let i = 0; i < arrayContadores.size; i++) {
-        if(arrayContadores.get(i) > 0){
+        if (arrayContadores.get(i) > 0) {
             arrayContadoresMayorCero.push(i);
         }
     }
@@ -335,10 +311,11 @@ function generaNaveAleatorias(contadorPortaviones,contadorAcorazados,contadorDes
     return arrayContadoresMayorCero[0];
 }
 
-function shuffle (array){
+//Baraja el array de naves restantes por generar
+function shuffle(array) {
     let indice = array.length, indiceAleatorio;
     let aux;
-    while(indice > 0){
+    while (indice > 0) {
         indiceAleatorio = Math.floor(Math.random() * indice);
         indice--;
         aux = array[indice];
