@@ -37,14 +37,15 @@ function crearPosiciones(grid) {
     let contadorDestructores = 3;
     let contadorFragatas = 2;
     let tipoDeNave, semilla, casillaFinal, esApta = false, direccionDibujo, arrayValidez;
-    let detenerEjecucion = 0;
     //Generamos naves mientras aún queden por generar
     while (contadorPortaviones + contadorAcorazados + contadorDestructores + contadorFragatas > 0) {
         //Generamos casillas nuevas mientras estas no sean aptas
         tipoDeNave = generaNaveAleatorias(contadorPortaviones, contadorAcorazados, contadorDestructores, contadorFragatas);
         direccionDibujo = Math.floor(Math.random() * 2);
         while (!esApta) {
-            semilla = [Math.floor(Math.random() * 10), Math.floor(Math.random() * 10)];
+            let x = Math.floor(Math.random() * 10);
+            let y = Math.floor(Math.random() * 10);
+            semilla = [x, y];
             console.log(tipoDeNave);
             arrayValidez = comprobarPosicion(semilla, direccionDibujo, tipoDeNave, grid);
             esApta = arrayValidez[0];
@@ -78,10 +79,6 @@ function crearPosiciones(grid) {
                 break;
         }
         esApta = false;
-        detenerEjecucion++;
-        if(detenerEjecucion > 10000){
-            break;
-        }
     }
     return grid;
 }
