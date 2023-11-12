@@ -1,6 +1,7 @@
 let Punto = function (x, y) {
     this.x = x;
     this.y = y;
+    
     this.cambiar = function (x2, y2) {
         this.x = x2;
         this.y = y2;
