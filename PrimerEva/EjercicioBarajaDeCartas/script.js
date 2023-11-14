@@ -16,6 +16,9 @@ function Baraja(){
         let strCartas = "";
         for (let i = 0; i < cartas.length; i++) {
             strCartas += cartas[i].toString() + " ";
+            if(i != 0 && (i+1)%10 == 0){
+                strCartas += "\n";
+            }
         }
         return strCartas;
     }
