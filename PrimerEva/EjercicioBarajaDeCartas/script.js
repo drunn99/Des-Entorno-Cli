@@ -41,7 +41,7 @@ function Carta(palo,numero) {
     }
 
     this.toString = function(){
-        let numero = ["As","Dos","Tres","Cuatro","Cinco","Seis","Siete","Ocho","Nueve","Sota","Caballo","Rey"];
+        let numero = ["As","Dos","Tres","Cuatro","Cinco","Seis","Siete","Sota","Caballo","Rey"];
         let palo = ["Oros","Espadas","Copas","Bastos"];
         return `${numero[this.numero-1]} de ${palo[this.palo-1]}`;
     }
