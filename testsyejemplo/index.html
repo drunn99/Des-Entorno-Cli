@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script>
-        let parrafo1 = document.getElementById("parrafo1");
 
-        for(let hijo of parrafo1.childNodes){
-            console.log(`Texto: "${hijo.nodeValue}"\n` +
-            + `Tipo de nodo: ${hijo.nodeType}, ${hijo.nodeName}`);
+</head>
+
+<body>
+    <div>
+        <p id="p1">Lorem ipsum, dolor sit amet consectetur adipisicing elit. In adipisci <strong>architecto</strong> totam, odio
+            earum qui temporibus ut id laborum soluta.</p>
+    </div>
+    <script>
+        let p1 = document.getElementById("p1");
+        let hijos = p1.children;
+        for (let h of hijos){
+            console.log(h.textContent);
         }
     </script>
-</head>
-<body>
-    <section id="s1">
-        <h1 id="titulo">¿QUIÉN SOY?</h1>
-        <p id="parrafo1">Hola soy <strong>El Pepetrón</strong>, soy profesor de informática</p>
-        <p id="parrafo2">Y también soy un cinéfilo</p>
-        <p id="parrafo3">Y un seriéfilo</p>
-    </section>
 </body>
+
 </html>
