@@ -2,6 +2,7 @@ Array.prototype.mediaAritmetica = function(){
     let media = 0;
     let contador = 0;
     for(let prop in this){
+        console.log(typeof this[prop]);
         if(typeof this[prop] == "number"){
             media+=this[prop];
             contador++;
