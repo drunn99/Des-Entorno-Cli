@@ -6,3 +6,7 @@ text.addEventListener("scroll", () => {
         button.style["display"] = "block";
     }
 })
+
+button.addEventListener("click", () => {
+    text.style["display"] = "none";
+})
