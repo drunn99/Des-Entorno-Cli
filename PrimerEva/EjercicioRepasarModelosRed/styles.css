@@ -1,0 +1,79 @@
+body {
+    margin: 0;
+}
+
+header>div {
+    color:whitesmoke;
+    background-color: rgb(37, 94, 94);
+    display: flex;
+    flex-direction: row;
+}
+
+header>div:first-child {
+    justify-content: center;
+    width: 100%;
+}
+
+header>div:last-child {
+    width: 70%;
+    padding-left: 30%;
+    justify-content: space-around;
+}
+
+#veloNegro{
+    background-color: black;
+    width:100%;
+}
+
+#controles {
+    width: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    >button {
+        width: 50%;
+    }
+}
+
+.content{
+    display:flex;
+    flex-direction: row;
+}
+
+#OSI{
+    visibility: hidden;
+    width: 35%;
+    height: 600px;
+    background-color: rgb(118, 217, 235);
+    margin-left: 20%;
+    text-align: center;
+    > li {
+        list-style: none;
+        height: 10%;
+        background-color: bisque;
+        margin: 2%;
+        border-radius: 20px;
+    }
+}
+
+#TCPIP{
+    visibility: hidden;
+    width: 35%;
+    height: 600px;
+    background-color: rgb(118, 217, 235);;
+    text-align: center;
+    > li {
+        list-style: none;
+        height: 15%;
+        background-color: bisque;
+        margin: 2%;
+        border-radius: 20px;
+    }
+    > li:first-child{
+        height: 30%;
+    }
+    > li:last-child{
+        height: 20%;
+    }
+}
