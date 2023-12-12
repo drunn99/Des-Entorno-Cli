@@ -1,12 +1,15 @@
-let height = 0;
-let width = 0;
-let minas = 1;
+let height = 5;
+let width = 5;
+let minas = 10;
+
 //Bucle que se asegura que no haya más minas que casillas posibles
+/*
 while (height * width < minas) {
     height = parseInt(prompt("Introduce el ancho del tablero"));
     width = height;
     minas = parseInt(prompt("Introduce el número de minas"));
 }
+*/
 
 tablero = crearTablero(height, width, minas);
 tablero = analizarTablero(tablero);
@@ -22,6 +25,8 @@ celdas.forEach(celda => {
             if (tablero[indices[0]][indices[1]] != "💣") {
                 if (tablero[indices[0]][indices[1]] > 0) {
                     celda.firstChild.innerHTML = tablero[indices[0]][indices[1]];
+                } else {
+
                 }
             } else {
                 celda.firstChild.innerHTML = tablero[indices[0]][indices[1]];
@@ -87,7 +92,7 @@ function generarHtml(tablero) {
     let divs = "";
     for (let i = 0; i < tablero.length; i++) {
         for (let j = 0; j < tablero[i].length; j++) {
-            divs += `<div id="${i + ";" + j}" class="celda" style="width:${+100 / width}%" hidden><div class="text"></div></div>`;
+            divs += `<div id="${i + ";" + j}" class="celda" style="width:${100 / width}%" hidden><div class="text"></div></div>`;
         }
     }
     return divs;
