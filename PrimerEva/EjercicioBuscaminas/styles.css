@@ -1,21 +1,32 @@
+.game{
+    display: flex;
+    justify-content: center;
+}
+
 #tablero{
-    width:80%;
-    height: 100%;
-    text-align: center;
-    margin:auto;
+    width: 1200px;
+    height: 1200px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(20,40px);
+    grid-template-rows: repeat(20,40px);
+    gap: 5px;
+    justify-content: center;
 }
 
 div.celda{
-    display: inline-block;
-    outline:1px solid black;
-    font-size: 200%;
-    height: 100px;
-    background-color: lightgray;
+    display: block;
+    outline: 1px solid black;
+    width: 40px;
+    height: 40px;
+    border: solid;
+    border-color: white white black black;
 }
 
 div.text{
-    width: 100%;
-    height: 100px;
+    display: flex;
     align-items: center;
     justify-content: center;
+    font-size: larger;
+    font-weight: 600;
 }

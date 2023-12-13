@@ -1,6 +1,6 @@
-let height = 10;
-let width = 10;
-let minas = 10;
+let height = 20;
+let width = 20;
+let minas = 100;
 
 //Bucle que se asegura que no haya más minas que casillas posibles
 /*
@@ -18,8 +18,8 @@ console.table(tablero);
 
 let celdas = document.querySelectorAll(".celda");
 celdas.forEach(celda => {
-    celda.addEventListener("click", () => {
-        if (celda.hasAttribute("hidden")) {
+    celda.addEventListener("mouseup", (ev) => {
+        if (ev.button == 0 && celda.hasAttribute("hidden")) {
             celda.toggleAttribute("hidden");
             let indices = celda.getAttribute("id").split(";");
             if (tablero[indices[0]][indices[1]] != "💣") {
@@ -27,13 +27,23 @@ celdas.forEach(celda => {
                     celda.firstChild.innerHTML = tablero[indices[0]][indices[1]];
                 } else {
                     celda.innerHTML = casilla0(indices[0], indices[1]);
+                    celda.removeEventListener("click");
                 }
             } else {
-                celda.firstChild.innerHTML = tablero[indices[0]][indices[1]];
+                celdas.forEach(celdaMina => {
+                    let celdaXY = celdaMina.getAttribute("id").split(";");
+                    if(tablero[celdaXY[0]][celdaXY[1]] == "💣"){
+                        celdaMina.firstChild.innerHTML = "💣";
+                    }
+                });
                 alert("Has muerto :(");
             }
-        } else {
-
+        } else if (ev.button = 2 && celda.hasAttribute("hidden")) {
+            //Prevención de menú contextual al hacer click derecho
+            celda.addEventListener("contextmenu", (ev2) => {
+                ev2.preventDefault();
+            })
+            celda.firstChild.innerHTML = celda.firstChild.innerHTML == "🚩" ? "" : "🚩";
         }
     })
 });
@@ -92,7 +102,7 @@ function generarHtml(tablero) {
     let divs = "";
     for (let i = 0; i < tablero.length; i++) {
         for (let j = 0; j < tablero[i].length; j++) {
-            divs += `<div id="${i + ";" + j}" class="celda" style="width:${100 / width}%" hidden><div class="text"></div></div>`;
+            divs += `<div id="${i + ";" + j}" class="celda" hidden><div class="text"></div></div>`;
         }
     }
     return divs;
