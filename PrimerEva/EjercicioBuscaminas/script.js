@@ -18,36 +18,51 @@ console.table(tablero);
 
 let celdas = document.querySelectorAll(".celda");
 celdas.forEach(celda => {
-    celda.addEventListener("mouseup", (ev) => {
-        if (ev.button == 0 && celda.hasAttribute("hidden")) {
+    celda.addEventListener("click", () => {
+        if (celda.hasAttribute("hidden")) {
             celda.toggleAttribute("hidden");
             let indices = celda.getAttribute("id").split(";");
             if (tablero[indices[0]][indices[1]] != "💣") {
                 if (tablero[indices[0]][indices[1]] > 0) {
+                    //Introducimos el valor de la celda clickada si este no es una mina y es mayor que cero
                     celda.firstChild.innerHTML = tablero[indices[0]][indices[1]];
                 } else {
-                    celda.innerHTML = casilla0(indices[0], indices[1]);
-                    celda.removeEventListener("click");
+                    /*
+                    Bucle que recorre las 8 celdas colindantes y muestra su contenido si no es 0 
+                    además de eliminar su listener del evento "CLICK"
+                    */
+                    for (let i = -1; i < 2; i++) {
+                        for (let j = -1; j < 2; j++) {
+                            compareNextCell(`${(parseInt(indices[0]) + i) + ";" + (parseInt(indices[1]) + j)}`);
+                        }
+                    }
                 }
             } else {
+                //Bucle para mostrar todas las minas una vez se clicka una (Game Over!)
                 celdas.forEach(celdaMina => {
                     let celdaXY = celdaMina.getAttribute("id").split(";");
-                    if(tablero[celdaXY[0]][celdaXY[1]] == "💣"){
+                    if (tablero[celdaXY[0]][celdaXY[1]] == "💣") {
                         celdaMina.firstChild.innerHTML = "💣";
                     }
                 });
                 alert("Has muerto :(");
             }
-        } else if (ev.button = 2 && celda.hasAttribute("hidden")) {
-            //Prevención de menú contextual al hacer click derecho
-            celda.addEventListener("contextmenu", (ev2) => {
-                ev2.preventDefault();
-            })
-            celda.firstChild.innerHTML = celda.firstChild.innerHTML == "🚩" ? "" : "🚩";
         }
     })
 });
 
+
+celdas.forEach(celda => {
+    celda.addEventListener("mouseup", (ev) => {
+        if (ev.button = 2 && celda.hasAttribute("hidden")) {
+            //Prevención de menú contextual al hacer click derecho
+            celda.addEventListener("contextmenu", (ev2) => {
+                ev2.preventDefault();
+                celda.firstChild.innerHTML = celda.firstChild.innerHTML == "🚩" ? "" : "🚩";
+            })
+        }
+    })
+})
 
 // - - - FUNCIONES - - -
 
@@ -97,7 +112,7 @@ function analizarCasilla(x, y, tablero) {
     return contador;
 }
 
-
+//Genera el tablero a jugar
 function generarHtml(tablero) {
     let divs = "";
     for (let i = 0; i < tablero.length; i++) {
@@ -108,36 +123,12 @@ function generarHtml(tablero) {
     return divs;
 }
 
-function casilla0(x, y) {
-    console.log(x, y);
-    if (tablero[x][y] > 0) {
-        return tablero[x][y];
-    } else {
-        if (x < 9)
-            casilla0(x++, y);
-        if (x > 0)
-            casilla0(x--, y);
-        if (y < 9)
-            casilla0(x, y++);
-        if (y > 0)
-            casilla0(x, y--);
-    }
-}
-
 /*
-function generarHtmlFinal(tablero) {
-    let cadenaDivs = "";
-    for (let i = 0; i < tablero.length; i++) {
-        for (let j = 0; j < tablero[i].length; j++) {
-            cadenaDivs += "<div class='celda' style='width:"+100/width+"%'><div class='text'>";
-            if (tablero[i][j] == "💣") {
-                cadenaDivs += "💣";
-            } else {
-                cadenaDivs += tablero[i][j];
-            }
-            cadenaDivs += "</div></div>";
-        }
-    }
-    return cadenaDivs;
-}
+Busca la siguiente celda proporcionada por la línea 
 */
+function compareNextCell(index) {
+    console.log("a");
+    let nextCell = document.getElementById(index);
+    nextCell?.click();
+    nextCell?.removeEventListener("click", nextCell);
+}
