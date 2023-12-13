@@ -1,5 +1,5 @@
-let height = 5;
-let width = 5;
+let height = 10;
+let width = 10;
 let minas = 10;
 
 //Bucle que se asegura que no haya más minas que casillas posibles
@@ -26,14 +26,14 @@ celdas.forEach(celda => {
                 if (tablero[indices[0]][indices[1]] > 0) {
                     celda.firstChild.innerHTML = tablero[indices[0]][indices[1]];
                 } else {
-
+                    celda.innerHTML = casilla0(indices[0], indices[1]);
                 }
             } else {
                 celda.firstChild.innerHTML = tablero[indices[0]][indices[1]];
                 alert("Has muerto :(");
             }
         } else {
-            
+
         }
     })
 });
@@ -96,6 +96,22 @@ function generarHtml(tablero) {
         }
     }
     return divs;
+}
+
+function casilla0(x, y) {
+    console.log(x, y);
+    if (tablero[x][y] > 1) {
+        return tablero[x][y];
+    } else {
+        if (x < 9)
+            casilla0(x++, y);
+        if (x > 0)
+            casilla0(x--, y);
+        if (y < 9)
+            casilla0(x, y++);
+        if (y > 0)
+            casilla0(x, y--);
+    }
 }
 
 /*
