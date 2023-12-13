@@ -1,6 +1,7 @@
 let height = 20;
 let width = 20;
 let minas = 100;
+const colors = ["blue","green","red","purple","darkred","cyan","black"];
 
 //Bucle que se asegura que no haya más minas que casillas posibles
 /*
@@ -22,10 +23,13 @@ celdas.forEach(celda => {
         if (celda.hasAttribute("hidden")) {
             celda.toggleAttribute("hidden");
             let indices = celda.getAttribute("id").split(";");
-            if (tablero[indices[0]][indices[1]] != "💣") {
-                if (tablero[indices[0]][indices[1]] > 0) {
+            let content = tablero[indices[0]][indices[1]];
+            if (content != "💣") {
+                if (content > 0) {
                     //Introducimos el valor de la celda clickada si este no es una mina y es mayor que cero
                     celda.firstChild.innerHTML = tablero[indices[0]][indices[1]];
+                    celda.style["background-color"] = "darkgray";
+                    celda.firstChild.style["color"] = colors[content-1];
                 } else {
                     /*
                     Bucle que recorre las 8 celdas colindantes y muestra su contenido si no es 0 
@@ -33,6 +37,7 @@ celdas.forEach(celda => {
                     */
                     for (let i = -1; i < 2; i++) {
                         for (let j = -1; j < 2; j++) {
+                            celda.style["background-color"] = "darkgray";
                             compareNextCell(`${(parseInt(indices[0]) + i) + ";" + (parseInt(indices[1]) + j)}`);
                         }
                     }
@@ -124,11 +129,11 @@ function generarHtml(tablero) {
 }
 
 /*
-Busca la siguiente celda proporcionada por la línea 
+Busca la siguiente celda proporcionada por la línea 38
 */
 function compareNextCell(index) {
-    console.log("a");
     let nextCell = document.getElementById(index);
     nextCell?.click();
     nextCell?.removeEventListener("click", nextCell);
+    nextCell?.removeEventListener("mouseup", nextCell);
 }

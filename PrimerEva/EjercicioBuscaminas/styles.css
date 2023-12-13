@@ -21,6 +21,7 @@ div.celda{
     height: 40px;
     border: solid;
     border-color: white white black black;
+    background-color: gray;
 }
 
 div.text{
@@ -28,5 +29,5 @@ div.text{
     align-items: center;
     justify-content: center;
     font-size: larger;
-    font-weight: 600;
+    font-weight: 800;
 }
