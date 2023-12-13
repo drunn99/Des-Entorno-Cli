@@ -100,7 +100,7 @@ function generarHtml(tablero) {
 
 function casilla0(x, y) {
     console.log(x, y);
-    if (tablero[x][y] > 1) {
+    if (tablero[x][y] > 0) {
         return tablero[x][y];
     } else {
         if (x < 9)
