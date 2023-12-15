@@ -1,6 +1,6 @@
 let height = 20;
 let width = 20;
-let minas = 100;
+let minas = 50;
 const colors = ["blue","green","red","purple","darkred","cyan","black"];
 
 //Bucle que se asegura que no haya más minas que casillas posibles
