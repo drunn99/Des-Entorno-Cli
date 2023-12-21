@@ -8,29 +8,111 @@ function getElement(selection) {
   );
 }
 
-
-
 class Gallery {
+  static initializedButtons = false;
   constructor(element) {
-    this.images = [...element.childNodes];
+    this.images = element.children;
     this.modalWindow = document.querySelector(".modal");
     this.mainImg = document.querySelector(".main-img");
     this.imageName = document.querySelector(".image-name");
     this.modalImages = document.querySelector(".modal-images");
     this.prevBtn = document.querySelector(".prev-btn");
     this.nextBtn = document.querySelector(".next-btn");
-    //Asignación de funciones a propiedades
-    
+    this.closeBtn = document.querySelector(".close-btn");
+
+    //Abrir modal
+    [...this.images].forEach(img => {
+      img.addEventListener("click", () => {
+        this.openModal(img, this.images);
+      })
+    });
+
+    //Asignación de los botones (Compruebo si ya se ha hecho para evitar añadir varios eventos al mismo botón)
+    if (!Gallery.initializedButtons) {
+      this.nextBtn.addEventListener("click", () => { this.nextImage() });
+      this.prevBtn.addEventListener("click", () => { this.prevImage() });
+      Gallery.initializedButtons = true;
+    }
+
+    //Cerrar modal
+    this.closeBtn.addEventListener("click", () => {
+      this.closeModal();
+    });
   }
 
   openModal(selectedImage, list) {
-    this.images.forEach(img => {
-      img.addEventListener("click", () => {
-        console.log("click en imagen");
-        this.modalWindow.setAttribute("class","modal open")
-      })
+    //Cambiar imágen principal
+    this.setMainImage(selectedImage);
+    //Eliminar listado de las anteriores imágenes del modal
+    [...this.modalImages.children].forEach(img => {
+      this.modalImages.removeChild(img);
     });
+    //Crear listado de las siguientes imágenes a mostrar
+    [...list].forEach(img => {
+      let newModalImage = img.cloneNode(false);
+      //Resaltar la imágen principal seleccionada en la lista
+      let modalClass = selectedImage == img ? "modal-img selected" : "modal-img";
+      newModalImage.setAttribute("class", modalClass);
+      //Añadir evento click sobre las imágenes
+      newModalImage.addEventListener("click", () => {
+        this.chooseImage(newModalImage);
+      });
+      //Añadir imágenes a la lista de imágenes modales
+      this.modalImages.appendChild(newModalImage);
+    });
+
+    //Mostrar modal
+    this.modalWindow.setAttribute("class", "modal open");
   }
+
+  //Ocultar modal
+  closeModal() {
+    this.modalWindow.setAttribute("class", "modal");
+  }
+
+  //Cambiar la imágen principal y seleccionar esta en la lista de imágenes
+  chooseImage(selectedImg) {
+    [...this.modalImages.children].forEach(img => {
+      if (selectedImg == img) {
+        this.setMainImage(selectedImg);
+        img.setAttribute("class", "modal-img selected");
+      } else {
+        img.setAttribute("class", "modal-img");
+      }
+    })
+  }
+
+  //Cambiar imágen principal
+  setMainImage(selectedImage) {
+    this.mainImg.setAttribute("src", selectedImage.getAttribute("src"));
+    this.imageName.innerHTML = (selectedImage.getAttribute("title"));
+  }
+
+  //Cambiar imágen a la siguiente
+  nextImage() {
+    let arrOfImages = [...this.modalImages.children];
+    let nextImage = arrOfImages[(this.getMainImgIndex() + 1) % arrOfImages.length];
+    this.chooseImage(nextImage);
+  }
+
+  //Cambiar imágen a la anterior
+  prevImage() {
+    let arrOfImages = [...this.modalImages.children];
+    let nextImage = arrOfImages[((this.getMainImgIndex() - 1)+arrOfImages.length) % arrOfImages.length];
+    this.chooseImage(nextImage);
+  }
+
+  //Devuelve el índice de la imágen modal seleccionada 
+  getMainImgIndex() {
+    let arrOfImages = [...this.modalImages.children]
+    for (let i = 0; i < arrOfImages.length; i++) {
+      if (this.mainImg.getAttribute("src") == arrOfImages[i].getAttribute("src")) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
 }
 
 
@@ -47,7 +129,6 @@ class Gallery {
  * - prevImage()
  * - chooseImage(e) - Se ejecuta cuando clicamos en alguna de las imágenes con clase modal-images
  */
-
 
 const nature = new Gallery(getElement('.nature'));
 const city = new Gallery(getElement('.city'));
