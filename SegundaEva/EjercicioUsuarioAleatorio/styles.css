@@ -1,0 +1,10 @@
+body{
+    margin:0;
+    background-color: azure;
+    font-family: monospace;
+    >div{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
