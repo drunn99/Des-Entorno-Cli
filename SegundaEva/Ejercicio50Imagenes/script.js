@@ -12,7 +12,6 @@ function getNewFaces() {
             for (const key in data.results) {
                 listOfPictures.push(data.results[`${key}`].picture.large);
             }
-
             let cont = 0;
             setInterval(() => {
                 if (cont < 100) {
