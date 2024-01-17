@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Icono cargando</title>
+</head>
+<body>
+    <canvas id="lienzo" width="100px" height="50px">
+        <script>
+            function dibujaRect(ctx, n=1){
+                for (let i = 1; i < 11; i++){
+                    if(n==i) ctx.fillStyle="black";
+                    else ctx.fillStyle="gray";
+                    ctx.fillRect((i-1)*10,0,5,50);
+                }
+            }
+            window.addEventListener("DOMContentLoaded", (ev) => {
+                let lienzo = document.getElementById("lienzo");
+                let cont = 0;
+                ctx = lienzo.getContext("2d");
+                setInterval(() => {
+                    cont++;
+                    dibujaRect(ctx,cont);
+                    if(cont==10) cont= 0;
+                }, 100);
+            })
+        </script>
+    </canvas>
+</body>
+</html>
